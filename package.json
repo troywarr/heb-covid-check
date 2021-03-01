@@ -1,0 +1,16 @@
+{
+  "name": "heb-covid-check",
+  "version": "0.1.0",
+  "description": "Poller for available vaccine appointments at HEB.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Troy Warr <troy3000@gmail.com>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "beepbeep": "^1.3.0",
+    "node-fetch": "^2.6.1",
+    "open": "^7.4.2"
+  }
+}
