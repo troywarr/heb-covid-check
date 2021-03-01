@@ -5,11 +5,16 @@ const beep = require('beepbeep');
 
 
 // settings
-const checkInterval = 10; // every 10 seconds
+const checkInterval = 12; // 5 times/minute
 const desiredCities = [
     // 'LUBBOCK',
     // 'ODESSA',
     'AUSTIN',
+    'ROUND ROCK', 
+    'PFLUGERVILLE',
+    'BASTROP',
+    'NEW BRAUNFELS',
+    'WIMBERLEY',
 ];
 
 
