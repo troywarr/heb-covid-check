@@ -5,16 +5,17 @@ const beep = require('beepbeep');
 
 
 // settings
-const checkInterval = 12; // 5 times/minute
-const desiredCities = [
-    // 'LUBBOCK',
-    // 'ODESSA',
-    'AUSTIN',
-    'ROUND ROCK', 
-    'PFLUGERVILLE',
-    'BASTROP',
-    'NEW BRAUNFELS',
-    'WIMBERLEY',
+const checkInterval = 6; // 10 times/minute
+const tabsToOpen = 1; // set to a higher number to try to get multiple appointments at similar times
+const desiredCities = [ // use lowercase to avoid any case mismatches
+    'austin',
+    'round rock', 
+    'pflugerville',
+    'bastrop',
+    'new braunfels',
+    'wimberley',
+    'la grange',
+    'san antonio',
 ];
 
 
@@ -36,18 +37,20 @@ const checkAvailability = function () {
         .then(data => {
             let available = [];
             for (let i = 0, len = data.locations.length; i < len; i++) {
-                if (desiredCities.includes(data.locations[i].city) && data.locations[i].openTimeslots > 0) {
+                if (desiredCities.includes(data.locations[i].city.toLowerCase()) && data.locations[i].openTimeslots > 1) { // <= 1 time slot never seems to be actually available
                     available.push(data.locations[i]);
                 }
             }
             if (available.length > 0) {
                 clearInterval(checking);
-                beep(5, 200);
                 available.sort((a, b) => b.openTimeslots - a.openTimeslots);
                 console.log(available);
-                (async () => {
-                    await open(available[0].url);
-                })();
+                for (let i = 0; i < tabsToOpen; i++) {
+                    (async () => {
+                        await open(available[0].url);
+                    })();
+                }
+                beep(3, 250);
             }
         });
 };
