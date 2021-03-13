@@ -9,10 +9,24 @@ const { exec } = require("child_process");
 const checkInterval = 6; // 10 times/minute
 const tabsToOpen = 1; // set to a higher number to try to get multiple appointments at similar times
 const desiredCities = [ // use lowercase to avoid any case mismatches
+    'west lake hills',
+    'bee cave',
+    'lakeway',
+    'dripping springs',
     'austin',
-    'kyle',
-    'buda',
+    'new braunfels',
+    'wimberley',
+    'round rock',
+    'georgetown',
+    'hutto',
     'bastrop',
+    'cedar park',
+    'pflugerville',
+    'killeen',
+    'burnet',
+    'marble falls',
+    'taylor',
+    'harker heights',
 ];
 
 
