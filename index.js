@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const open = require('open');
 const beep = require('beepbeep');
+const { exec } = require("child_process");
 
 
 
@@ -47,6 +48,17 @@ const checkAvailability = function () {
                     })();
                 }
                 beep(3, 250);
+                exec("say Appointment found", (error, stdout, stderr) => {
+                    if (error) {
+                        console.log(`error: ${error.message}`);
+                        return;
+                    }
+                    if (stderr) {
+                        console.log(`stderr: ${stderr}`);
+                        return;
+                    }
+                    console.log(`stdout: ${stdout}`);
+                });
             }
         });
 };
