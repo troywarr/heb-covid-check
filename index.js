@@ -48,7 +48,7 @@ const checkAvailability = function () {
                     })();
                 }
                 beep(3, 250);
-                exec("say Appointment found", (error, stdout, stderr) => {
+                exec("say Appointment found Appointment found Appointment found", (error, stdout, stderr) => {
                     if (error) {
                         console.log(`error: ${error.message}`);
                         return;
