@@ -3,7 +3,7 @@ const open = require('open');
 const beep = require('beepbeep');
 const { exec } = require("child_process");
 
-
+exec("say Looking for vaccines");
 
 // settings
 const checkInterval = 6; // 10 times/minute
@@ -62,17 +62,7 @@ const checkAvailability = function () {
                     })();
                 }
                 beep(3, 250);
-                exec(available, (error, stdout, stderr) => {
-                    if (error) {
-                        console.log(`error: ${error.message}`);
-                        return;
-                    }
-                    if (stderr) {
-                        console.log(`stderr: ${stderr}`);
-                        return;
-                    }
-                    console.log(`stdout: ${stdout}`);
-                });
+                exec("say Appointment found");
                 beep(3, 250);
             }
         });
