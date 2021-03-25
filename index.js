@@ -20,9 +20,9 @@ const desiredCities = [ // use lowercase to avoid any case mismatches
 
 
 
-const checkAvailability = function () {
+const checkAvailability = async function () {
     console.log('checking...');
-    fetch('https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json', {
+    const response = await fetch('https://heb-ecom-covid-vaccine.hebdigital-prd.com/vaccine_locations.json', {
         headers: {
             'sec-ch-ua': '"Chromium";v="88", "Google Chrome";v="88", ";Not A Brand";v="99"',
             'sec-ch-ua-mobile': '?0'
@@ -32,27 +32,23 @@ const checkAvailability = function () {
         body: null,
         method: 'GET',
         mode: 'cors',
-    })
-        .then(response => response.json())
-        .then(data => {
-            let available = [];
-            for (let i = 0, len = data.locations.length; i < len; i++) {
-                if (desiredCities.includes(data.locations[i].city.toLowerCase()) && data.locations[i].openTimeslots > 1) { // <= 1 time slot never seems to be actually available
-                    available.push(data.locations[i]);
-                }
-            }
-            if (available.length > 0) {
-                clearInterval(checking);
-                available.sort((a, b) => b.openTimeslots - a.openTimeslots);
-                console.log(available);
-                for (let i = 0; i < tabsToOpen; i++) {
-                    (async () => {
-                        await open(available[0].url);
-                    })();
-                }
-                beep(3, 250);
-            }
-        });
+    });
+    const { locations } = await response.json();
+    const available = locations.filter(loc =>
+        desiredCities.includes(loc.city.toLowerCase()) && loc.openTimeslots > 1
+    );
+
+    if (available.length) {
+        clearInterval(checking);
+        available.sort((a, b) => b.openTimeslots - a.openTimeslots);
+        console.log(available);
+        for (let i = 0; i < tabsToOpen; i++) {
+            (async () => {
+                await open(available[0].url);
+            })();
+        }
+        beep(3, 250);
+    }
 };
 
 const checking = setInterval(checkAvailability, checkInterval * 1000);
