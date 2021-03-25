@@ -32,17 +32,17 @@ const checkAvailability = async function () {
         body: null,
         method: 'GET',
         mode: 'cors',
-    })
-    const data = await response.json()
+    });
+    const data = await response.json();
 
     const available = data.locations.filter(loc =>
         desiredCities.includes(loc.city.toLowerCase()) && loc.openTimeslots > 1
-    )
+    );
 
     if (available.length) {
         clearInterval(checking);
         available.sort((a, b) => b.openTimeslots - a.openTimeslots);
-
+        console.log(available);
         for (let i = 0; i < tabsToOpen; i++) {
             (async () => {
                 await open(available[0].url);
