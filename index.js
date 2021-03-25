@@ -33,9 +33,8 @@ const checkAvailability = async function () {
         method: 'GET',
         mode: 'cors',
     });
-    const data = await response.json();
-
-    const available = data.locations.filter(loc =>
+    const { locations } = await response.json();
+    const available = locations.filter(loc =>
         desiredCities.includes(loc.city.toLowerCase()) && loc.openTimeslots > 1
     );
 
